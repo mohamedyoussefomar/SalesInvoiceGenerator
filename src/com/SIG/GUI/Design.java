@@ -34,6 +34,7 @@ public class Design extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         MainTable = new javax.swing.JTable();
+        MainTable.getSelectionModel().addListSelectionListener(controller);
         CreateInvoiceButton = new javax.swing.JButton();
         CreateInvoiceButton.addActionListener(controller);
         DeleteInvoiceButton = new javax.swing.JButton();

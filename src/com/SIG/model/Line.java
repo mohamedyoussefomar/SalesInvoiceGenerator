@@ -1,6 +1,5 @@
 package com.SIG.model;
 public class Line {
-   private int num;
    private String item;
    private double price;
    private int count;
@@ -10,7 +9,6 @@ public class Line {
     }
 
     public Line(int num, String item, double price, int count, Invoice invoice) {
-        this.num = num;
         this.item = item;
         this.price = price;
         this.count = count;
@@ -27,14 +25,6 @@ public class Line {
 
     public void setCount(int count) {
         this.count = count;
-    }
-
-    public int getNum() {
-        return num;
-    }
-
-    public void setNum(int num) {
-        this.num = num;
     }
 
     public String getItem() {
@@ -55,6 +45,11 @@ public class Line {
 
     @Override
     public String toString() {
-        return "Line{" + "num=" + num + ", item=" + item + ", price=" + price + ", count=" + count + '}';
+        return "Line{" + "num=" + invoice.getNum() + ", item=" + item + ", price=" + price + ", count=" + count + '}';
     }
+
+    public Invoice getInvoice() {
+        return invoice;
+    }
+    
 }

@@ -4,6 +4,7 @@ import com.SIG.GUI.Design;
 import com.SIG.model.Invoice;
 import com.SIG.model.InvoicesTableModel;
 import com.SIG.model.Line;
+import com.SIG.model.LinesTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -14,11 +15,13 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFileChooser;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 /**
  * @author Mohamed Youssef
  */
-public class SIGcontroller implements ActionListener {
+public class SIGcontroller implements ActionListener, ListSelectionListener {
     private Design frame;
     public SIGcontroller(Design frame){
     this.frame = frame;
@@ -48,6 +51,19 @@ public class SIGcontroller implements ActionListener {
                     cancelChanges();
                 break;
     }
+    }
+    @Override
+    public void valueChanged(ListSelectionEvent e) {
+        int selectedIndex = frame.getMainTable().getSelectedRow();
+        System.out.println("You have selection on raw No. "+ selectedIndex);
+        Invoice currentInvoice = frame.getInvoices().get(selectedIndex);
+        frame.getInvoiceNumLabel().setText(""+currentInvoice.getNum());
+        frame.getInvoiceDateLabel().setText(currentInvoice.getDate());
+        frame.getCustomerNameLabel().setText(currentInvoice.getCustomer());
+        frame.getInvoiceTotalLabel().setText(""+currentInvoice.getInvoiceTotal());
+        LinesTableModel linesTableModel = new LinesTableModel(currentInvoice.getLines());
+        frame.getLineTable().setModel(linesTableModel);
+        linesTableModel.fireTableDataChanged();
     }
     private void loadFile(){
         JFileChooser fc = new JFileChooser();
@@ -117,4 +133,4 @@ public class SIGcontroller implements ActionListener {
 
     private void cancelChanges(){
             }
-}
+    }
