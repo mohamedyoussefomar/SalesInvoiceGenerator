@@ -85,6 +85,7 @@ public class SIGcontroller implements ActionListener, ListSelectionListener {
         linesTableModel.fireTableDataChanged();
     }
     }
+    // to load CSV files into the project frame
     private void loadFile(){
         JFileChooser fc = new JFileChooser();
         try {
@@ -138,7 +139,7 @@ public class SIGcontroller implements ActionListener, ListSelectionListener {
         ex.printStackTrace();
     }
     }
-
+// to save files invoices or lines in new CSV file
     private void saveFile() {
         ArrayList<Invoice> invoices = frame.getInvoices();
         String headers = "";
@@ -177,12 +178,12 @@ public class SIGcontroller implements ActionListener, ListSelectionListener {
                    }
     }
 
-        
+     // to create new entry to invoice table   
     private void createNewInvoice() { 
         invoiceDialog = new InvoiceDialog(frame);
         invoiceDialog.setVisible(true);
     }
-
+// to delete existing invoice
     private void deleteInvoice(){
         int selectedRow = frame.getInvoiceTable().getSelectedRow();
         if (selectedRow != -1) {
@@ -190,12 +191,12 @@ public class SIGcontroller implements ActionListener, ListSelectionListener {
             frame.getInvoicesTableModel().fireTableDataChanged();
         }
             }
-
+// to add new item to line table
     private void addNewItem(){
              lineDialog = new LineDialog(frame);
              lineDialog.setVisible(true);
     }
-
+// to delete item from line table
     private void deleteItem(){
         int selectedInv = frame.getInvoiceTable().getSelectedRow();
         int selectedRow = frame.getLineTable().getSelectedRow();
@@ -208,7 +209,7 @@ public class SIGcontroller implements ActionListener, ListSelectionListener {
             frame.getInvoicesTableModel().fireTableDataChanged();
         }
             }
-
+// to create new invoice confirmation dialog
     private void createInvoiceConfirm() {
         String date = invoiceDialog.getInvoiceDateField().getText();
         String customer = invoiceDialog.getCustomerNameField().getText();
@@ -220,13 +221,13 @@ public class SIGcontroller implements ActionListener, ListSelectionListener {
         invoiceDialog.dispose();
         invoiceDialog = null;
     }
-
+// to cancel creating new invoice
     private void createInvoiceCancel() {
         invoiceDialog.setVisible(false);
         invoiceDialog.dispose();
         invoiceDialog = null;
     }
-
+// to create new item in the line table
     private void createLineConfirm() {
         String item = lineDialog.getItemNameField().getText();
         String countStr = lineDialog.getItemCountField().getText();
@@ -247,10 +248,11 @@ public class SIGcontroller implements ActionListener, ListSelectionListener {
         lineDialog.dispose();
         lineDialog = null;
     }
-
+// to cancel adding new item
     private void createLineCancel() {
         lineDialog.setVisible(false);
         lineDialog.dispose();
         lineDialog = null;
     }
     }
+// this file is the main controller of the project

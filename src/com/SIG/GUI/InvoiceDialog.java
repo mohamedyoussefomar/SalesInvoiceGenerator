@@ -1,5 +1,5 @@
 package com.SIG.GUI;
-
+//this file for invoice dialogs
 import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;

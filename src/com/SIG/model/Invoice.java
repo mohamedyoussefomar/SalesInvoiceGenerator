@@ -2,7 +2,7 @@ package com.SIG.model;
 
 import java.util.ArrayList;
 
-
+// this file for invoice table
 public class Invoice {
     private int num;
     private String date;

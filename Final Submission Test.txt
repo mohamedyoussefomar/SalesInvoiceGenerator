@@ -2,3 +2,5 @@ The project is finalized on 21/05/2021;
 This file to test modifications pushing to remote repo @https://github.com/mohamedyoussefomar/SalesInvoiceGenerator.git
 Name: Mohamed Youssef Omar;
 Email: mohamedyoussefomar@gmail.com;
+
+Last modification was adding comments for each section for the ease of review.

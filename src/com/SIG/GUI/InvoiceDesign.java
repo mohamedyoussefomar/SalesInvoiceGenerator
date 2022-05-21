@@ -303,3 +303,4 @@ public class InvoiceDesign extends javax.swing.JFrame {
         return ++num;
     }
 }
+// This is main project GUI design

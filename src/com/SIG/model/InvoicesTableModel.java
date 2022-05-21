@@ -1,5 +1,6 @@
 package com.SIG.model;
 
+// this line was created for invoices table model
 import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
 

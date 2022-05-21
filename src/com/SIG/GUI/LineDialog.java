@@ -1,11 +1,10 @@
 package com.SIG.GUI;
-
+// this file for line dialogs
 import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-
 
 public class LineDialog extends JDialog{
     private JTextField itemNameField;

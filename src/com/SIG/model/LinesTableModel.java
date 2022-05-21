@@ -1,5 +1,7 @@
 package com.SIG.model;
 
+// this file was created for line table model
+
 import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
 

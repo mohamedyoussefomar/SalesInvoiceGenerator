@@ -1,4 +1,6 @@
 package com.SIG.model;
+
+// this file for line table
 public class Line {
    private String item;
    private double price;
