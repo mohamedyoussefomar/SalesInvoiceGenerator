@@ -52,4 +52,7 @@ public class Line {
         return invoice;
     }
     
+    public String getAsCSV() {
+        return invoice.getNum() + "," + item + "," + price + "," + count;
+    }
 }

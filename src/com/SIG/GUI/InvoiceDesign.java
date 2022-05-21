@@ -10,16 +10,12 @@ import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 
-/**
- *
- * @author moham
- */
-public class Design extends javax.swing.JFrame {
+public class InvoiceDesign extends javax.swing.JFrame {
 
     /**
      * Creates new form Design
      */
-    public Design() {
+    public InvoiceDesign() {
         initComponents();
     }
 
@@ -33,8 +29,8 @@ public class Design extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        MainTable = new javax.swing.JTable();
-        MainTable.getSelectionModel().addListSelectionListener(controller);
+        InvoiceTable = new javax.swing.JTable();
+        InvoiceTable.getSelectionModel().addListSelectionListener(controller);
         CreateInvoiceButton = new javax.swing.JButton();
         CreateInvoiceButton.addActionListener(controller);
         DeleteInvoiceButton = new javax.swing.JButton();
@@ -49,10 +45,10 @@ public class Design extends javax.swing.JFrame {
         InvoiceDateLabel = new javax.swing.JLabel();
         CustomerNameLabel = new javax.swing.JLabel();
         InvoiceTotalLabel = new javax.swing.JLabel();
-        SaveChangesButton = new javax.swing.JButton();
-        SaveChangesButton.addActionListener(controller);
-        CancelChangesButton = new javax.swing.JButton();
-        CancelChangesButton.addActionListener(controller);
+        CreateNewItemButton = new javax.swing.JButton();
+        CreateNewItemButton.addActionListener(controller);
+        DeleteItemButton = new javax.swing.JButton();
+        DeleteItemButton.addActionListener(controller);
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jLoadMenuItem = new javax.swing.JMenuItem();
@@ -62,7 +58,7 @@ public class Design extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        MainTable.setModel(new javax.swing.table.DefaultTableModel(
+        InvoiceTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -70,7 +66,7 @@ public class Design extends javax.swing.JFrame {
 
             }
         ));
-        jScrollPane1.setViewportView(MainTable);
+        jScrollPane1.setViewportView(InvoiceTable);
 
         CreateInvoiceButton.setText("Create New Invoice");
 
@@ -94,9 +90,9 @@ public class Design extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(LineTable);
 
-        SaveChangesButton.setText("Save Changes");
+        CreateNewItemButton.setText("Add New Item");
 
-        CancelChangesButton.setText("Cancel Changes");
+        DeleteItemButton.setText("Delete Item");
 
         jMenu1.setText("File");
 
@@ -122,7 +118,7 @@ public class Design extends javax.swing.JFrame {
                         .addGap(160, 160, 160)
                         .addComponent(DeleteInvoiceButton)
                         .addGap(45, 45, 45)
-                        .addComponent(SaveChangesButton)
+                        .addComponent(CreateNewItemButton)
                         .addGap(45, 326, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -146,7 +142,7 @@ public class Design extends javax.swing.JFrame {
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(CancelChangesButton)
+                                    .addComponent(DeleteItemButton)
                                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(45, 45, 45))))))
         );
@@ -178,8 +174,8 @@ public class Design extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(DeleteInvoiceButton)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(SaveChangesButton)
-                        .addComponent(CancelChangesButton))
+                        .addComponent(CreateNewItemButton)
+                        .addComponent(DeleteItemButton))
                     .addComponent(CreateInvoiceButton))
                 .addContainerGap(30, Short.MAX_VALUE))
         );
@@ -204,35 +200,36 @@ public class Design extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Design.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InvoiceDesign.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Design.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InvoiceDesign.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Design.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InvoiceDesign.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Design.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InvoiceDesign.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Design().setVisible(true);
+                new InvoiceDesign().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton CancelChangesButton;
     private javax.swing.JButton CreateInvoiceButton;
+    private javax.swing.JButton CreateNewItemButton;
     private javax.swing.JLabel CustomerNameLabel;
     private javax.swing.JButton DeleteInvoiceButton;
+    private javax.swing.JButton DeleteItemButton;
     private javax.swing.JLabel InvoiceDateLabel;
     private javax.swing.JLabel InvoiceNumLabel;
+    private javax.swing.JTable InvoiceTable;
     private javax.swing.JLabel InvoiceTotalLabel;
     private javax.swing.JTable LineTable;
-    private javax.swing.JTable MainTable;
-    private javax.swing.JButton SaveChangesButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -250,6 +247,7 @@ public class Design extends javax.swing.JFrame {
     private SIGcontroller controller = new SIGcontroller(this);
     private InvoicesTableModel invoicesTableModel;
     public ArrayList<Invoice> getInvoices() {
+        if (invoices == null) invoices = new ArrayList<>();
         return invoices;
     }
 
@@ -258,6 +256,9 @@ public class Design extends javax.swing.JFrame {
     }
 
     public InvoicesTableModel getInvoicesTableModel() {
+        if (invoicesTableModel == null) {
+            invoicesTableModel = new InvoicesTableModel(getInvoices());
+        }
         return invoicesTableModel;
     }
 
@@ -265,8 +266,8 @@ public class Design extends javax.swing.JFrame {
         this.invoicesTableModel = invoicesTableModel;
     }
 
-    public JTable getMainTable() {
-        return MainTable;
+    public JTable getInvoiceTable() {
+        return InvoiceTable;
     }
 
     public JTable getLineTable() {
@@ -293,4 +294,12 @@ public class Design extends javax.swing.JFrame {
         return controller;
     }
     
+    public int getNextInvoiceNum() {
+        int num = 0;
+        for (Invoice invoice: invoices) {
+            if (invoice.getNum() > num) 
+                num = invoice.getNum();
+        }
+        return ++num;
+    }
 }

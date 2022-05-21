@@ -61,7 +61,7 @@
                       <EmptySpace min="-2" pref="160" max="-2" attributes="0"/>
                       <Component id="DeleteInvoiceButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
-                      <Component id="SaveChangesButton" min="-2" max="-2" attributes="0"/>
+                      <Component id="CreateNewItemButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="45" pref="326" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -91,7 +91,7 @@
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
                               <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="CancelChangesButton" min="-2" max="-2" attributes="0"/>
+                                  <Component id="DeleteItemButton" min="-2" max="-2" attributes="0"/>
                                   <Component id="jScrollPane2" min="-2" pref="385" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
@@ -136,8 +136,8 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="DeleteInvoiceButton" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="SaveChangesButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="CancelChangesButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="CreateNewItemButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="DeleteItemButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="CreateInvoiceButton" min="-2" max="-2" attributes="0"/>
               </Group>
@@ -154,14 +154,14 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="MainTable">
+        <Component class="javax.swing.JTable" name="InvoiceTable">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="0" rowCount="0"/>
             </Property>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="MainTable.getSelectionModel().addListSelectionListener(controller);"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="InvoiceTable.getSelectionModel().addListSelectionListener(controller);"/>
           </AuxValues>
         </Component>
       </SubComponents>
@@ -226,20 +226,20 @@
     </Component>
     <Component class="javax.swing.JLabel" name="InvoiceTotalLabel">
     </Component>
-    <Component class="javax.swing.JButton" name="SaveChangesButton">
+    <Component class="javax.swing.JButton" name="CreateNewItemButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Save Changes"/>
+        <Property name="text" type="java.lang.String" value="Add New Item"/>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="SaveChangesButton.addActionListener(controller);&#xd;&#xa;"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="CreateNewItemButton.addActionListener(controller);&#xd;&#xa;"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JButton" name="CancelChangesButton">
+    <Component class="javax.swing.JButton" name="DeleteItemButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Cancel Changes"/>
+        <Property name="text" type="java.lang.String" value="Delete Item"/>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="CancelChangesButton.addActionListener(controller);&#xd;&#xa;"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="DeleteItemButton.addActionListener(controller);&#xd;&#xa;"/>
       </AuxValues>
     </Component>
   </SubComponents>

@@ -1,6 +1,8 @@
 package com.SIG.Control;
 
-import com.SIG.GUI.Design;
+import com.SIG.GUI.InvoiceDesign;
+import com.SIG.GUI.InvoiceDialog;
+import com.SIG.GUI.LineDialog;
 import com.SIG.model.Invoice;
 import com.SIG.model.InvoicesTableModel;
 import com.SIG.model.Line;
@@ -8,6 +10,7 @@ import com.SIG.model.LinesTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -22,8 +25,11 @@ import javax.swing.event.ListSelectionListener;
  * @author Mohamed Youssef
  */
 public class SIGcontroller implements ActionListener, ListSelectionListener {
-    private Design frame;
-    public SIGcontroller(Design frame){
+    private InvoiceDesign frame;
+    private InvoiceDialog invoiceDialog;
+    private LineDialog lineDialog;
+
+    public SIGcontroller(InvoiceDesign frame){
     this.frame = frame;
     }
 
@@ -44,17 +50,30 @@ public class SIGcontroller implements ActionListener, ListSelectionListener {
                 case "Delete Invoice":
                     deleteInvoice();
                 break;
-                case "Save Changes":
-                    saveChanges();
+                case "Add New Item":
+                    addNewItem();
                 break;
-                case "Cancel Changes":
-                    cancelChanges();
+                case "Delete Item":
+                    deleteItem();
                 break;
+                case "createInvoiceConfirm":
+                    createInvoiceConfirm();
+                    break;
+                case "createInvoiceCancel":
+                    createInvoiceCancel();
+                    break;
+                case "createLineConfirm":
+                    createLineConfirm();
+                    break;
+                case "createLineCancel":
+                    createLineCancel();
+                    break; 
     }
     }
     @Override
     public void valueChanged(ListSelectionEvent e) {
-        int selectedIndex = frame.getMainTable().getSelectedRow();
+        int selectedIndex = frame.getInvoiceTable().getSelectedRow();
+        if (selectedIndex != -1) {
         System.out.println("You have selection on raw No. "+ selectedIndex);
         Invoice currentInvoice = frame.getInvoices().get(selectedIndex);
         frame.getInvoiceNumLabel().setText(""+currentInvoice.getNum());
@@ -64,6 +83,7 @@ public class SIGcontroller implements ActionListener, ListSelectionListener {
         LinesTableModel linesTableModel = new LinesTableModel(currentInvoice.getLines());
         frame.getLineTable().setModel(linesTableModel);
         linesTableModel.fireTableDataChanged();
+    }
     }
     private void loadFile(){
         JFileChooser fc = new JFileChooser();
@@ -111,7 +131,7 @@ public class SIGcontroller implements ActionListener, ListSelectionListener {
            frame.setInvoices(invoicesArray);
            InvoicesTableModel invoicesTableModel = new InvoicesTableModel(invoicesArray);
            frame.setInvoicesTableModel(invoicesTableModel);
-           frame.getMainTable().setModel(invoicesTableModel);
+           frame.getInvoiceTable().setModel(invoicesTableModel);
            frame.getInvoicesTableModel().fireTableDataChanged();
         }
     } catch (IOException ex){
@@ -120,17 +140,117 @@ public class SIGcontroller implements ActionListener, ListSelectionListener {
     }
 
     private void saveFile() {
+        ArrayList<Invoice> invoices = frame.getInvoices();
+        String headers = "";
+        String lines = "";
+        for (Invoice invoice : invoices) {
+            String invoiceCSV = invoice.getAsCSV();
+            headers += invoiceCSV;
+            headers += "\n";
+            
+            for (Line line : invoice.getLines()) {
+            String lineCSV = line.getAsCSV();
+            lines += lineCSV;
+            lines += "\n";
+            }
+        }
+        System.out.println("Changes Saved");
+        try {
+            JFileChooser fc = new JFileChooser();
+            int result = fc.showSaveDialog(frame);
+            if (result == JFileChooser.APPROVE_OPTION) {
+                File headerFile = fc.getSelectedFile();
+                FileWriter hfWriter = new FileWriter(headerFile);
+                hfWriter.write(headers);
+                hfWriter.flush();
+                hfWriter.close();
+                result = fc.showSaveDialog(frame);
+                if (result == JFileChooser.APPROVE_OPTION) {
+                File lineFile = fc.getSelectedFile();
+                FileWriter lfWriter = new FileWriter(lineFile);
+                lfWriter.write(lines);
+                lfWriter.flush();
+                lfWriter.close();
+            }
+            }
+        } catch (Exception ex) {
+                   }
     }
 
-    private void createNewInvoice() {     
+        
+    private void createNewInvoice() { 
+        invoiceDialog = new InvoiceDialog(frame);
+        invoiceDialog.setVisible(true);
     }
 
     private void deleteInvoice(){
+        int selectedRow = frame.getInvoiceTable().getSelectedRow();
+        if (selectedRow != -1) {
+            frame.getInvoices().remove(selectedRow);
+            frame.getInvoicesTableModel().fireTableDataChanged();
+        }
             }
 
-    private void saveChanges(){
+    private void addNewItem(){
+             lineDialog = new LineDialog(frame);
+             lineDialog.setVisible(true);
+    }
+
+    private void deleteItem(){
+        int selectedInv = frame.getInvoiceTable().getSelectedRow();
+        int selectedRow = frame.getLineTable().getSelectedRow();
+        if (selectedInv != -1 && selectedRow != -1) {
+            Invoice invoice = frame.getInvoices().get(selectedInv);
+            invoice.getLines().remove(selectedRow);
+            LinesTableModel linesTableModel = new LinesTableModel(invoice.getLines());
+            frame.getLineTable().setModel(linesTableModel);
+            linesTableModel.fireTableDataChanged();
+            frame.getInvoicesTableModel().fireTableDataChanged();
+        }
             }
 
-    private void cancelChanges(){
-            }
+    private void createInvoiceConfirm() {
+        String date = invoiceDialog.getInvoiceDateField().getText();
+        String customer = invoiceDialog.getCustomerNameField().getText();
+        int num = frame.getNextInvoiceNum();
+        Invoice invoice = new Invoice(num, date, customer);
+        frame.getInvoices().add(invoice);
+        frame.getInvoicesTableModel().fireTableDataChanged();
+        invoiceDialog.setVisible(false);
+        invoiceDialog.dispose();
+        invoiceDialog = null;
+    }
+
+    private void createInvoiceCancel() {
+        invoiceDialog.setVisible(false);
+        invoiceDialog.dispose();
+        invoiceDialog = null;
+    }
+
+    private void createLineConfirm() {
+        String item = lineDialog.getItemNameField().getText();
+        String countStr = lineDialog.getItemCountField().getText();
+        String priceStr = lineDialog.getItemPriceField().getText();
+        int count = Integer.parseInt(countStr);
+        double price = Double.parseDouble(priceStr);
+        int selectedInvoice = frame.getInvoiceTable().getSelectedRow();
+        if (selectedInvoice != -1) {
+            Invoice invoice = frame.getInvoices().get(selectedInvoice);
+            Line line = new Line(count, item, price, count, invoice);
+            invoice.getLines().add(line);
+            LinesTableModel linesTableModel = (LinesTableModel) frame.getLineTable().getModel();
+            linesTableModel.fireTableDataChanged();
+            frame.getInvoicesTableModel().fireTableDataChanged();
+            
+        }
+        lineDialog.setVisible(false);
+        lineDialog.dispose();
+        lineDialog = null;
+    }
+
+    private void createLineCancel() {
+        lineDialog.setVisible(false);
+        lineDialog.dispose();
+        lineDialog = null;
+    }
     }
