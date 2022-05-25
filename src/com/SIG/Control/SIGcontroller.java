@@ -15,9 +15,14 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -97,12 +102,17 @@ public class SIGcontroller implements ActionListener, ListSelectionListener {
            System.out.println("Invoices are successfully read");
            ArrayList<Invoice> invoicesArray = new ArrayList<> ();
            for (String headerLine : headerLines){
+               try {
                String[] headerLineParts = headerLine.split(",");
                int invoiceNum = Integer.parseInt(headerLineParts[0]);
                String invoiceDate = (headerLineParts[1]);
                String customerName = (headerLineParts[2]);
                Invoice invoice= new Invoice(invoiceNum, invoiceDate, customerName);
                invoicesArray.add(invoice);
+               } catch (Exception ex){
+                   ex.printStackTrace();
+                   JOptionPane.showMessageDialog(frame, "Wrong File Format", "Error", JOptionPane.ERROR_MESSAGE);
+                }
            }
            System.out.println("Invoices are comma separated successfully");
            result = fc.showOpenDialog(frame);
@@ -112,6 +122,7 @@ public class SIGcontroller implements ActionListener, ListSelectionListener {
            List<String> lineLines = Files.readAllLines(linePath);
            System.out.println("Lines are successfully read");
            for (String lineLine : lineLines){
+               try {
                String[] lineLineParts = lineLine.split(",");
                int invoiceNum = Integer.parseInt(lineLineParts[0]);
                String itemName = (lineLineParts[1]);
@@ -126,6 +137,9 @@ public class SIGcontroller implements ActionListener, ListSelectionListener {
                }
                Line line = new Line(invoiceNum, itemName, itemPrice, count, inv);
                inv.getLines().add(line);
+               } catch (Exception ex){
+                   ex.printStackTrace();
+                   JOptionPane.showMessageDialog(frame, "Wrong File Format", "Error", JOptionPane.ERROR_MESSAGE);
            }
            System.out.println("Lines are linked with invoices");
            }
@@ -135,8 +149,10 @@ public class SIGcontroller implements ActionListener, ListSelectionListener {
            frame.getInvoiceTable().setModel(invoicesTableModel);
            frame.getInvoicesTableModel().fireTableDataChanged();
         }
-    } catch (IOException ex){
+    } 
+        }catch (Exception ex){
         ex.printStackTrace();
+        JOptionPane.showMessageDialog(frame, "Wrong File Format", "Error", JOptionPane.ERROR_MESSAGE);
     }
     }
 // to save files invoices or lines in new CSV file
@@ -214,12 +230,29 @@ public class SIGcontroller implements ActionListener, ListSelectionListener {
         String date = invoiceDialog.getInvoiceDateField().getText();
         String customer = invoiceDialog.getCustomerNameField().getText();
         int num = frame.getNextInvoiceNum();
-        Invoice invoice = new Invoice(num, date, customer);
-        frame.getInvoices().add(invoice);
-        frame.getInvoicesTableModel().fireTableDataChanged();
-        invoiceDialog.setVisible(false);
-        invoiceDialog.dispose();
-        invoiceDialog = null;
+        // to validate date formatting
+        try {
+            String[] dateFormatSection = date.split("-");
+            if (dateFormatSection.length < 3) {
+                JOptionPane.showMessageDialog(frame, "Wrong date formate, please enter correct date","Error",JOptionPane.ERROR_MESSAGE);
+            } else {
+                int day = Integer.parseInt(dateFormatSection[0]);
+                int month = Integer.parseInt(dateFormatSection[1]);
+                int year = Integer.parseInt(dateFormatSection[2]);
+                if (day > 31 || month > 12) {
+                   JOptionPane.showMessageDialog(frame, "Wrong date formate, please enter correct date","Error",JOptionPane.ERROR_MESSAGE);
+                }else{
+            Invoice invoice = new Invoice(num, date, customer);
+            frame.getInvoices().add(invoice);
+            frame.getInvoicesTableModel().fireTableDataChanged();
+            invoiceDialog.setVisible(false);
+            invoiceDialog.dispose();
+            invoiceDialog = null;
+            }    
+        }
+        }catch (Exception ex){
+        JOptionPane.showMessageDialog(frame, "Wrong date formate, please enter correct date","Error",JOptionPane.ERROR_MESSAGE);
+                }
     }
 // to cancel creating new invoice
     private void createInvoiceCancel() {
